@@ -93,29 +93,29 @@ void processar(wchar_t linha[][BUFSIZ], int ntestes) {
     }
 }
 
-int main() {
-    setlocale(LC_ALL, "C.UTF-8");
-
-    int num_testes;
-    wscanf(L"%d", &num_testes);
-    while (getwchar() != L'\n');
-
-    wchar_t (*cartas)[BUFSIZ] = malloc(num_testes * sizeof(*cartas));
-    if (cartas == NULL) {
-        fprintf(stderr, "Falha na memoria.\n");
-        return 1;
-    }
-
-    for(int i = 0; i < num_testes; i++) {
-        if (fgetws(cartas[i], BUFSIZ, stdin)){
-            size_t len = wcslen(cartas[i]);
-            if (cartas[i][len - 1] == L'\n') cartas[i][len - 1] = L'\0';
-        }
-    }
-
-    processar(cartas, num_testes);
-
-    free(cartas);
-
-    return 0;
-}
+//int main() {
+//    setlocale(LC_ALL, "C.UTF-8");
+//
+//    int num_testes;
+//    wscanf(L"%d", &num_testes);
+//    while (getwchar() != L'\n');
+//
+//    wchar_t (*cartas)[BUFSIZ] = malloc(num_testes * sizeof(*cartas));
+//    if (cartas == NULL) {
+//        fprintf(stderr, "Falha na memoria.\n");
+//        return 1;
+//    }
+//
+//    for(int i = 0; i < num_testes; i++) {
+//        if (fgetws(cartas[i], BUFSIZ, stdin)){
+//            size_t len = wcslen(cartas[i]);
+//            if (cartas[i][len - 1] == L'\n') cartas[i][len - 1] = L'\0';
+//        }
+//    }
+//
+//    processar(cartas, num_testes);
+//
+//    free(cartas);
+//
+//    return 0;
+//}

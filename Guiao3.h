@@ -1,6 +1,8 @@
 #ifndef GUIAO3_H
 #define GUIAO3_H
 
+#include <stdbool.h>
+
 /**
  * @brief Remove uma carta da mão do jogador, quando jogada
  * @param mao A mão do jogador, antes de fazer a jogada
@@ -20,7 +22,7 @@ void removerCartasJogadas(wchar_t *mao, wchar_t *jogada);
  * @param jogadaAtual Jogada a ser verifica
  * @return 1 se é válida, 0 se não
  */
-int aMinhaJogadaEValida (wchar_t jogadaAtual[]);
+bool aMinhaJogadaEValida (wchar_t jogadaAtual[]);
 
 /**
  * @brief Verifica se todas as três jogadas anteriores são "PASSO"
@@ -28,28 +30,28 @@ int aMinhaJogadaEValida (wchar_t jogadaAtual[]);
  * @param N Número de jogadas feitas
  * @return 1 se foram, 0 se não
  */
-int todosPassaram(wchar_t jogadasAnteriores[][56], int N);
+bool todosPassaram(wchar_t jogadasAnteriores[][56], int N);
 
 /**
  * @brief Verifica se uma jogada é um Rei
  * @param jogada Jogada
  * @return 1 se é, 0 se não
  */
-int umRei (wchar_t *jogada);
+bool umRei (wchar_t *jogada);
 
 /**
  * @brief Verifica se uma jogada são dois Reis
  * @param jogada Jogada
  * @return 1 se é, 0 se não
  */
-int doisReis (wchar_t *jogada);
+bool doisReis (wchar_t *jogada);
 
 /**
  * @brief Verifica se uma jogada são três Reis
  * @param jogada Jogada
  * @return 1 se é, 0 se não
  */
-int tresReis (wchar_t *jogada);
+bool tresReis (wchar_t *jogada);
 
 /**
  * @brief Valida a jogada, caso um jogador não tenha passado
@@ -58,7 +60,7 @@ int tresReis (wchar_t *jogada);
  * @param jogadaAtual Jogada que se quer fazer
  * @return 1 se é, 0 se não
  */
-int validaJogadaNaoPassou(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]);
+bool validaJogadaNaoPassou(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]);
 
 /**
  * @brief Valida a jogada, se for jogada uma das exceções de Reis
@@ -67,7 +69,7 @@ int validaJogadaNaoPassou(wchar_t jogadasAnteriores[][56], int N, wchar_t jogada
  * @param jogadaAtual Jogada que se quer fazer
  * @return 1 se é, 0 se não
  */
-int validaJogadaReis(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]);
+bool validaJogadaReis(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]);
 
 /**
  * @brief Função geral de validação
@@ -76,7 +78,7 @@ int validaJogadaReis(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual
  * @param jogadaAtual Jogada que se quer fazer
  * @return 1 se é, 0 se não
  */
-int validaJogada(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]);
+bool validaJogada(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]);
 
 /**
  * @brief Função geral de validação
@@ -85,7 +87,7 @@ int validaJogada(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]);
  * @param jogadaAtual Jogada que se quer fazer
  * @return 1 se é, 0 se não
  */
-int validaAJogadaSeTodosPassaram(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]);
+bool validaAJogadaSeTodosPassaram(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]);
 
 /**
  * @brief Processa as jogadas dentro dos testes

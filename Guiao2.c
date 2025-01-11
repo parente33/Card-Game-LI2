@@ -91,36 +91,36 @@ void processar1(wchar_t cartas[][56][56], int num_t, int *num_testes) {
     }
 }
 
-int main() {
-    setlocale(LC_ALL, "C.UTF-8");
-
-    int num_t;
-    int num_testes;
-    int num_testes1[BUFSIZ];
-    wscanf(L"%d", &num_t);
-    while (getwchar() != L'\n');
-
-    wchar_t (*cartas)[56][56] = malloc(num_t * sizeof(*cartas));
-    if (cartas == NULL) {
-        fprintf(stderr, "Falha na memoria.\n");
-        return 1;
-    }
-
-    for (int k = 0; k < num_t; k++) {
-        wscanf(L"%d", &num_testes);
-        while (getwchar() != L'\n');
-        num_testes1[k]=num_testes;
-        for(int i = 0; i < num_testes; i++) {
-            if (fgetws(cartas[k][i], BUFSIZ, stdin)){
-                size_t len = wcslen(cartas[k][i]);
-                if (cartas[k][i][len - 1] == L'\n') cartas[k][i][len - 1] = L'\0';
-            }
-        }
-    }
-
-    processar1(cartas, num_t, num_testes1);
-
-    free(cartas);
-
-    return 0;
-}
+//int main() {
+//    setlocale(LC_ALL, "C.UTF-8");
+//
+//    int num_t;
+//    int num_testes;
+//    int num_testes1[BUFSIZ];
+//    wscanf(L"%d", &num_t);
+//    while (getwchar() != L'\n');
+//
+//    wchar_t (*cartas)[56][56] = malloc(num_t * sizeof(*cartas));
+//    if (cartas == NULL) {
+//        fprintf(stderr, "Falha na memoria.\n");
+//        return 1;
+//    }
+//
+//    for (int k = 0; k < num_t; k++) {
+//        wscanf(L"%d", &num_testes);
+//        while (getwchar() != L'\n');
+//        num_testes1[k]=num_testes;
+//        for(int i = 0; i < num_testes; i++) {
+//            if (fgetws(cartas[k][i], BUFSIZ, stdin)){
+//                size_t len = wcslen(cartas[k][i]);
+//                if (cartas[k][i][len - 1] == L'\n') cartas[k][i][len - 1] = L'\0';
+//            }
+//        }
+//    }
+//
+//    processar1(cartas, num_t, num_testes1);
+//
+//    free(cartas);
+//
+//    return 0;
+//}

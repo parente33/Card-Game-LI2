@@ -3,9 +3,9 @@ CFLAGS = -Wall -Wextra -g
 
 INCLUDES = -Iinclude
 LIBS = -lm
-SRC = $(wildcard src/*.c)
+SRC = $(wildcard *.c)
 OBJ = obj
-OBJS = $(patsubst src/%.c,$(OBJ)/%.o,$(SRC))
+OBJS = $(patsubst %.c, $(OBJ)/%.o, $(SRC))
 
 REMOVE = rm -r
 
@@ -18,7 +18,7 @@ build: $(MAIN)
 $(MAIN): $(OBJS)
 	$(CC) $(INCLUDES) $(CFLAGS) -o $@ $^
 
-$(OBJ)/%.o:	src/%.c
+$(OBJ)/%.o:	%.c
 	@mkdir -p $(OBJ)
 	$(CC) -c $(INCLUDES) $(CFLAGS) -o $@ $<
 

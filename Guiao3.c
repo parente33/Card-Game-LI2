@@ -8,6 +8,7 @@
 #include <wchar.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 // Remove uma carta da mão do jogador, quando jogada
 void removerCarta(wchar_t *mao, wchar_t carta) {
@@ -33,69 +34,70 @@ void removerCartasJogadas(wchar_t *mao, wchar_t *jogada) {
 }
 
 // Verifica se a jogada é válida
-int aMinhaJogadaEValida (wchar_t jogadaAtual[]) {
-    int r = 0;
+bool aMinhaJogadaEValida (wchar_t jogadaAtual[]) {
     if (verificaSequencia(jogadaAtual, wcslen(jogadaAtual)) ||
         verificaDuplaSequencia(jogadaAtual, wcslen(jogadaAtual)) ||
         todasIguais (jogadaAtual, wcslen(jogadaAtual)) ||
         wcscmp(jogadaAtual, L"PASSO") == 0) {
-            r = 1;
+            return true;
     }
 
-    return r;
+    return false;
 }
+
 
 // Verifica se todas as três jogadas anteriores são "PASSO"
-int todosPassaram(wchar_t jogadasAnteriores[][56], int N) {
-    int r = 1;
-    if (N < 3) r = 0;
+bool todosPassaram(wchar_t jogadasAnteriores[][56], int N) {
+    if (N < 3)
+        return false;
 
     for (int i = N - 1; i >= N - 3; i--) {
-        if (wcscmp(jogadasAnteriores[i], L"PASSO") != 0) r = 0;
+        if (wcscmp(jogadasAnteriores[i], L"PASSO") != 0)
+            return false;
     }
 
-    return r;
+    return true;
 }
 
+
 // Verifica se uma jogada é apenas uma carta do tipo Rei
-int umRei (wchar_t *jogada) {
-    int r = 0;
+bool umRei (wchar_t *jogada) {
     if (wcslen(jogada) == 1) {
         for (int i = 0; i < (int)wcslen(jogada); i++) {
-            if (valorCheck(jogada[i]) != 13) break;
+            if (valorCheck(jogada[i]) != 13)
+                return false;
         }
-        r = 1;
+        return true;
     }   
-    return r;
+    return false;
 }
 
 // Verifica se uma jogada são duas cartas do tipo Rei
-int doisReis(wchar_t *jogada) {
-    int r = 0;
+bool doisReis(wchar_t *jogada) {
     if (wcslen(jogada) == 2) {
         for (int j = 0; j < (int)wcslen(jogada); j++) {
-            if (valorCheck(jogada[j]) != 13) break;
+            if (valorCheck(jogada[j]) != 13)
+                return false;
         }
-        r = 1;
+        return true;
     }
-    return r;
+    return false;
 }
 
 // Verifica se uma jogada são três cartas do tipo Rei
-int tresReis (wchar_t *jogada) {
-    int r = 0;
+bool tresReis (wchar_t *jogada) {
     if (wcslen(jogada) == 3) {
         for (int k = 0; k < (int)wcslen(jogada); k++) {
-            if (valorCheck(jogada[k]) != 13) break;
+            if (valorCheck(jogada[k]) != 13)
+                return false;
         }
-        r = 1;
+        return true;
     }
-    return r;
+    return false;
 }
 
 // Valida a jogada, caso um jogador não tenha passado
-int validaJogadaNaoPassou(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]) {
-    int r = 0;
+bool validaJogadaNaoPassou(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]) {
     int ultimoNaoPasso = -1;
     for (int i = N - 1; i >= N - 3; i--) {
         if (wcscmp(jogadasAnteriores[i], L"PASSO") != 0) {
@@ -104,25 +106,29 @@ int validaJogadaNaoPassou(wchar_t jogadasAnteriores[][56], int N, wchar_t jogada
         }
     }
 
-    if (wcscmp(jogadaAtual, L"PASSO") == 0) r = 1;
+    if (wcscmp(jogadaAtual, L"PASSO") == 0) {
+            return true;
+        }
 
     if (ultimoNaoPasso != -1 && wcslen(jogadasAnteriores[ultimoNaoPasso]) == wcslen(jogadaAtual)) {
         wchar_t ultimacartaAnterior = jogadasAnteriores[ultimoNaoPasso][wcslen(jogadasAnteriores[ultimoNaoPasso]) - 1];
         wchar_t ultimacartaAtual = jogadaAtual[wcslen(jogadaAtual) - 1];
 
         if (aMinhaJogadaEValida(jogadaAtual) && valorCheck(ultimacartaAtual) > valorCheck(ultimacartaAnterior)) { 
-            r = 1;
-        } else if (valorCheck(ultimacartaAtual) == valorCheck(ultimacartaAnterior)) {
-            if (naipeCheck(ultimacartaAtual) > naipeCheck(ultimacartaAnterior)) r = 1;
+            return true;
+        }
+            else if (valorCheck(ultimacartaAtual) == valorCheck(ultimacartaAnterior)) {
+            if (naipeCheck(ultimacartaAtual) > naipeCheck(ultimacartaAnterior)) {
+                return true;
+            } 
         }
     }
 
-    return r;
+    return false;
 }
 
 // Valida a jogada, se for jogada uma das exceções de Reis
-int validaJogadaReis(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]) {
-    int r = 0;
+bool validaJogadaReis(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]) {
     int ultimoNaoPasso = -1;
     for (int i = N - 1; i >= N - 3; i--) {
         if (wcscmp(jogadasAnteriores[i], L"PASSO") != 0) {
@@ -130,52 +136,59 @@ int validaJogadaReis(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual
         }
     }
 
-    if (wcscmp(jogadaAtual, L"PASSO") == 0) r = 1;
+    if (wcscmp(jogadaAtual, L"PASSO") == 0) {
+            return true;
+        }
 
     int tamJogadaAnterior = wcslen(jogadasAnteriores[ultimoNaoPasso]);
     int tamJogadaAtual = wcslen(jogadaAtual);
     qsort(jogadasAnteriores[ultimoNaoPasso], tamJogadaAnterior, sizeof(wchar_t), comparaCartas);
 
     if (umRei(jogadasAnteriores[ultimoNaoPasso]) && todasIguais(jogadaAtual,tamJogadaAtual) && tamJogadaAtual == 4) {
-        r = 1;
+        return true;
     } else if (umRei(jogadasAnteriores[ultimoNaoPasso]) && verificaDuplaSequencia(jogadaAtual,tamJogadaAtual) && tamJogadaAtual == 6) {
-        r = 1;
+        return true;
     } else if (doisReis(jogadasAnteriores[ultimoNaoPasso]) && verificaDuplaSequencia(jogadaAtual,tamJogadaAtual) && tamJogadaAtual == 8) {
-        r = 1;
+        return true;
     } else if (tresReis(jogadasAnteriores[ultimoNaoPasso]) && verificaDuplaSequencia(jogadaAtual,tamJogadaAtual) && tamJogadaAtual == 10) {
-        r = 1;
+        return true;
     } else if (umRei(jogadasAnteriores[ultimoNaoPasso]) && (validaJogadaNaoPassou(jogadasAnteriores,N,jogadaAtual))) {
-        r = 1;
+        return true;
     } else if (doisReis(jogadasAnteriores[ultimoNaoPasso]) && (validaJogadaNaoPassou(jogadasAnteriores,N,jogadaAtual))) {
-        r = 1;
+        return true;
     }
 
-    return r;
+    return false;
 }
 
 // Função geral de validação
-int validaJogada(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]) {
-    int resultado = validaJogadaNaoPassou(jogadasAnteriores, N, jogadaAtual) || validaJogadaReis(jogadasAnteriores, N, jogadaAtual);
+bool validaJogada(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]) {
+    bool resultado = validaJogadaNaoPassou(jogadasAnteriores, N, jogadaAtual) || validaJogadaReis(jogadasAnteriores, N, jogadaAtual);
     
-    if (resultado) return 1;
+    if (resultado)
+        return true;
     
-    if (N == 0 && aMinhaJogadaEValida(jogadaAtual)) return 1;
+    if (N == 0 && aMinhaJogadaEValida(jogadaAtual)) { 
+        return true;
+    }
     
-    return 0;
+    return false;
 }
 
 // Função geral de validação
-int validaAJogadaSeTodosPassaram(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]) {
-    int todaAGentePassou = todosPassaram(jogadasAnteriores, N);
+bool validaAJogadaSeTodosPassaram(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]) {
+    bool todaAGentePassou = todosPassaram(jogadasAnteriores, N);
 
-    if (todaAGentePassou && aMinhaJogadaEValida(jogadaAtual)) return 1;
+    if (todaAGentePassou && aMinhaJogadaEValida(jogadaAtual)) {
+            return true;
+    }
 
-    return 0;
+    return false;
 }
 
 // Processa as jogadas dentro dos testes
 void processarCasoTeste(wchar_t mao[], wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[], wchar_t resultado[]) {
-    int podeJogar = validaAJogadaSeTodosPassaram(jogadasAnteriores, N, jogadaAtual) || validaJogada(jogadasAnteriores, N, jogadaAtual);
+    bool podeJogar = validaAJogadaSeTodosPassaram(jogadasAnteriores, N, jogadaAtual) || validaJogada(jogadasAnteriores, N, jogadaAtual);
     
     if (podeJogar) {
         removerCartasJogadas(mao, jogadaAtual);
