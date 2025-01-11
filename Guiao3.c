@@ -162,7 +162,7 @@ bool validaJogadaReis(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtua
 }
 
 // Função geral de validação
-bool validaJogada(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]) {
+bool validaJogada(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[56]) {
     bool resultado = validaJogadaNaoPassou(jogadasAnteriores, N, jogadaAtual) || validaJogadaReis(jogadasAnteriores, N, jogadaAtual);
     
     if (resultado)
@@ -211,42 +211,42 @@ void lerJogadasAnteriores(wchar_t jogadasAnteriores[][56], int N) {
     }
 }
 
-int main() {
-    setlocale(LC_ALL, "C.UTF-8");
-
-    int T;
-    wscanf(L"%d", &T);
-
-    wchar_t resultados[T][56];
-
-    for (int t = 0; t < T; t++) {
-        int N;
-        wscanf(L"%d", &N);
-
-        wchar_t mao[56];
-        lerMao(mao);
-
-        wchar_t jogadasAnteriores[BUFSIZ][56];
-        lerJogadasAnteriores(jogadasAnteriores, N);
-
-        wchar_t jogadaAtual[56];
-        wscanf(L"%ls", jogadaAtual);
-        qsort(jogadaAtual, wcslen(jogadaAtual), sizeof(wchar_t), comparaCartas);
-
-        processarCasoTeste(mao, jogadasAnteriores, N, jogadaAtual, resultados[t]);
-    }
-
-    for (int i = 0; i < T; i++) {
-        wprintf(L"Teste %d\n", i + 1);
-
-        for (int j = 0; resultados[i][j] != L'\0'; j++) {
-            qsort(resultados[i], wcslen(resultados[i]), sizeof(wchar_t), comparaCartas);
-
-            wprintf(L"%lc", resultados[i][j]);
-            if (resultados[i][j + 1] != L'\0') wprintf(L" ");
-        }
-        wprintf(L"\n");
-    }
-
-    return 0;
-}
+//int main() {
+//    setlocale(LC_ALL, "C.UTF-8");
+//
+//    int T;
+//    wscanf(L"%d", &T);
+//
+//    wchar_t resultados[T][56];
+//
+//    for (int t = 0; t < T; t++) {
+//        int N;
+//        wscanf(L"%d", &N);
+//
+//        wchar_t mao[56];
+//        lerMao(mao);
+//
+//        wchar_t jogadasAnteriores[BUFSIZ][56];
+//        lerJogadasAnteriores(jogadasAnteriores, N);
+//
+//        wchar_t jogadaAtual[56];
+//        wscanf(L"%ls", jogadaAtual);
+//        qsort(jogadaAtual, wcslen(jogadaAtual), sizeof(wchar_t), comparaCartas);
+//
+//        processarCasoTeste(mao, jogadasAnteriores, N, jogadaAtual, resultados[t]);
+//    }
+//
+//    for (int i = 0; i < T; i++) {
+//        wprintf(L"Teste %d\n", i + 1);
+//
+//        for (int j = 0; resultados[i][j] != L'\0'; j++) {
+//            qsort(resultados[i], wcslen(resultados[i]), sizeof(wchar_t), comparaCartas);
+//
+//            wprintf(L"%lc", resultados[i][j]);
+//            if (resultados[i][j + 1] != L'\0') wprintf(L" ");
+//        }
+//        wprintf(L"\n");
+//    }
+//
+//    return 0;
+//}

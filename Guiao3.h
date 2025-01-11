@@ -78,7 +78,7 @@ bool validaJogadaReis(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtua
  * @param jogadaAtual Jogada que se quer fazer
  * @return 1 se é, 0 se não
  */
-bool validaJogada(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[]);
+bool validaJogada(wchar_t jogadasAnteriores[][56], int N, wchar_t jogadaAtual[56]);
 
 /**
  * @brief Função geral de validação
